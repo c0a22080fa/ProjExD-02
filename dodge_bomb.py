@@ -13,7 +13,7 @@ delta = {
 
 
 
-def bound(rect: pg.rect) -> tuple[bool, bool]:
+def bound_1(rect: pg.rect) -> tuple[bool, bool]:
     yoko, tate = True, True
     if rect.left < 0 or WIDTH < rect.right: 
         yoko = False
@@ -21,12 +21,8 @@ def bound(rect: pg.rect) -> tuple[bool, bool]:
         tate = False
     return yoko, tate
 
-
-
-
-
 def main():
-    bd_imgs = [] # 大きさのリストを作成
+    bd_imgs = []  # 大きさのリストを作成
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
@@ -34,20 +30,20 @@ def main():
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
-    for r in range(1, 11): #　追加課題2
+    for r in range(1, 11):  #　追加課題2
         bd_img = pg.Surface((20*r, 20*r))
         pg.draw.circle(bd_img, (255, 0, 0), (10*r, 10*r), 10*r)
         bd_img.set_colorkey((0,0,0))
         bd_imgs.append(bd_img)
-    bd_img = bd_imgs[0] # 初期の大きさリストを0に設定
-
+    bd_img = bd_imgs[0]  # 初期の大きさリストを0に設定
     x = random.randint(0, WIDTH)
     y = random.randint(0, HEIGHT)
     bd_rct = bd_img.get_rect()
-    bd_rct.center = x, y #xとyをrandomに生成
+    bd_rct.center = x, y  #xとyをrandomに生成
     vx, vy = +5, +5
     clock = pg.time.Clock()
     tmr = 0 
+
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: 
@@ -64,13 +60,13 @@ def main():
                 sum_mv[1] += mv[1]
         kk_rct.move_ip(sum_mv[0], sum_mv[1])
 
-        if bound(kk_rct) != (True, True):
+        if bound_1(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
 
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, kk_rct)
         bd_rct.move_ip(vx, vy)
-        yoko, tate =bound(bd_rct)
+        yoko, tate =bound_1(bd_rct)
         if not yoko:
             vx *= -1
         if not tate:
