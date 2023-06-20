@@ -10,7 +10,6 @@ delta = {
     pg.K_LEFT: (-5, 0),
     pg.K_RIGHT: (+5, 0)
 }
-accs = [a for a in range(1, 1100)] # 加速度を決める
 
 
 
